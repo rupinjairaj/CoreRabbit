@@ -1,0 +1,9 @@
+{
+    "ConnectionModel": {
+        "PORT": "5672",
+        "HOSTNAME": "localhost",
+        "USERNAME": "guest",
+        "PASSWORD": "guest",
+        "VHOST": "/" 
+    }
+}
