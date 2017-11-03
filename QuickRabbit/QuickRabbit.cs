@@ -16,13 +16,68 @@ namespace QuickRabbit
             connectionFactory.UserName = cm.USERNAME;
             connectionFactory.Password = cm.PASSWORD;
             connectionFactory.VirtualHost = cm.VHOST;
-            return connectionFactory.CreateConnection();
+            IConnection connection = null;
+            Console.WriteLine("Creating the connection...");
+            try
+            {
+                connection = connectionFactory.CreateConnection();
+                if (connection.IsOpen)
+                {
+                    Console.WriteLine("Connection successfully established!");
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong!");
+                }
+            }
+            catch (RabbitMQ.Client.Exceptions.BrokerUnreachableException exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            return connection;
         }
 
-        private static IConnection CloseRabbitConnection(IConnection connection)
+        private static void CloseRabbitConnection(IConnection connection)
         {
+            Console.WriteLine("Closing the connection...");
             connection.Close();
-            return connection;
+            if (!connection.IsOpen)
+            {
+                Console.WriteLine("Connection successfully closed!");
+            }
+            else
+            {
+                Console.WriteLine("Error in closing the connection!");
+            }
+        }
+
+        private static IModel GetRabbitChannel(IConnection connection)
+        {
+            Console.WriteLine("Creating the channel...");
+            IModel channel = connection.CreateModel();
+            if (channel.IsOpen)
+            {
+                Console.WriteLine("Channel successfully created!");
+            }
+            else
+            {
+                Console.WriteLine("Error in creating the channel!");
+            }
+            return channel;
+        }
+
+        private static void CloseRabbitChannel(IModel channel)
+        {
+            Console.WriteLine("Closing the channel...");
+            channel.Close();
+            if (channel.IsClosed)
+            {
+                Console.WriteLine("Channel successfully closed!");
+            }
+            else
+            {
+                Console.WriteLine("Error in closing the channel!");
+            }
         }
 
         static void Main(string[] args)
@@ -54,24 +109,9 @@ namespace QuickRabbit
             JSONMapper jMapper = new JSONMapper();
             var connectionModel = jMapper.BuildConnectionObject(json["ConnectionModel"]);
             var connection = GetRabbitConnection(connectionModel);
-            if (connection.IsOpen)
-            {
-                Console.WriteLine("Connection is open");
-            }
-            else
-            {
-                Console.WriteLine("Error connecting to RabbitMQ");
-            }
-            Console.WriteLine("Closing connection...");
-            connection.Close();
-            if (!connection.IsOpen)
-            {
-                Console.WriteLine("Connection closed!");
-            }
-            else
-            {
-                Console.WriteLine("Error closing connection!");
-            }
+            var channel = GetRabbitChannel(connection);
+            CloseRabbitChannel(channel);
+            CloseRabbitConnection(connection);
             Console.ReadKey();
         }
     }
