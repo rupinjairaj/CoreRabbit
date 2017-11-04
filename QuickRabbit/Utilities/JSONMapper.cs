@@ -15,8 +15,20 @@ namespace QuickRabbit.Utilities
 
         public ExchangeModel BuildExchangeModel(JToken JSONExchangeModel)
         {
-            // Building an ExchangeModel to pass-on to BuildExchangeModel
+            // Building an ExchangeModel to pass-on to DeclareRabbitExchange
             return JSONExchangeModel.ToObject<ExchangeModel>();
+        }
+
+        public QueueModel BuildQueueModel(JToken JSONQueueModel)
+        {
+            // Building a QueueModel to pass-on to DeclareRabbitQueue
+            return JSONQueueModel.ToObject<QueueModel>();
+        }
+
+        public QueueExchangeBindingModel BuildQueueExchangeBindingModel(JToken JSONQueueExchangeBindingModel)
+        {
+            // Building a BuildQueueExchangeBindingModel to pass-on to CreateQueueExchangeBinding
+            return JSONQueueExchangeBindingModel.ToObject<QueueExchangeBindingModel>();
         }
     }
 }

@@ -82,6 +82,7 @@ namespace QuickRabbit
 
         private static IModel DeclareRabbitExchange(IModel channel, ExchangeModel exchangeModel)
         {
+            Console.WriteLine("Creating the Exchange...");
             channel.ExchangeDeclare
             (
                 exchange: exchangeModel.Name,
@@ -90,6 +91,35 @@ namespace QuickRabbit
                 autoDelete: exchangeModel.AutoDelete,
                 arguments: exchangeModel.Arguments
             );
+            Console.WriteLine("Exchange created!");
+            return channel;
+        }
+
+        private static IModel DeclareRabbitQueue(IModel channel, QueueModel queueModel)
+        {
+            Console.WriteLine("Creating the Queue...");
+            channel.QueueDeclare
+            (
+                queue: queueModel.Name,
+                durable: queueModel.Durable,
+                exclusive: queueModel.Exclusive,
+                autoDelete: queueModel.AutoDelete,
+                arguments: queueModel.Arguments
+            );
+            Console.WriteLine("Queue created!");
+            return channel;
+        }
+
+        private static IModel CreateQueueExchangeBinding(IModel channel, QueueExchangeBindingModel queueExchangeBindingModel)
+        {
+            Console.WriteLine("Binding the Queue and Exchange...");
+            channel.QueueBind
+            (
+                queue: queueExchangeBindingModel.QueueName,
+                exchange: queueExchangeBindingModel.ExchangeName,
+                routingKey: queueExchangeBindingModel.RoutingKey
+            );
+            Console.WriteLine("Binding created between the Exchange and Queue!");
             return channel;
         }
 
@@ -126,6 +156,12 @@ namespace QuickRabbit
 
             var exchangeModel = jMapper.BuildExchangeModel(json["ExchangeModel"]);
             channel = DeclareRabbitExchange(channel, exchangeModel);
+
+            var queueModel = jMapper.BuildQueueModel(json["QueueModel"]);
+            channel = DeclareRabbitQueue(channel, queueModel);
+
+            var queueExchangeBindingModel = jMapper.BuildQueueExchangeBindingModel(json["QueueExchangeBindingModel"]);
+            channel = CreateQueueExchangeBinding(channel, queueExchangeBindingModel);
 
             CloseRabbitChannel(channel);
             CloseRabbitConnection(connection);

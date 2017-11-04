@@ -12,5 +12,17 @@
         "Durable": true,
         "AutoDelete": false,
         "Arguments": null
+    },
+    "QueueModel": {
+        "Name": "my.first.queue",
+        "Durable": true,
+        "Exclusive": false,
+        "AutoDelete": false,
+        "Arguments": null
+    },
+    "QueueExchangeBindingModel": {
+        "QueueName": "my.first.queue",
+        "ExchangeName": "my.first.exchange",
+        "RoutingKey": ""
     }
 }
