@@ -11,11 +11,11 @@ namespace QuickRabbit
         private static IConnection GetRabbitConnection(ConnectionModel cm)
         {
             ConnectionFactory connectionFactory = new ConnectionFactory();
-            connectionFactory.Port = cm.PORT;
-            connectionFactory.HostName = cm.HOSTNAME;
-            connectionFactory.UserName = cm.USERNAME;
-            connectionFactory.Password = cm.PASSWORD;
-            connectionFactory.VirtualHost = cm.VHOST;
+            connectionFactory.Port = cm.Port;
+            connectionFactory.HostName = cm.HostName;
+            connectionFactory.UserName = cm.UserName;
+            connectionFactory.Password = cm.Password;
+            connectionFactory.VirtualHost = cm.VHost;
             IConnection connection = null;
             Console.WriteLine("Creating the connection...");
             try
@@ -80,6 +80,19 @@ namespace QuickRabbit
             }
         }
 
+        private static IModel DeclareRabbitExchange(IModel channel, ExchangeModel exchangeModel)
+        {
+            channel.ExchangeDeclare
+            (
+                exchange: exchangeModel.Name,
+                type: exchangeModel.Type,
+                durable: exchangeModel.Durable,
+                autoDelete: exchangeModel.AutoDelete,
+                arguments: exchangeModel.Arguments
+            );
+            return channel;
+        }
+
         static void Main(string[] args)
         {
             // Get the JSON file.
@@ -110,9 +123,13 @@ namespace QuickRabbit
             var connectionModel = jMapper.BuildConnectionObject(json["ConnectionModel"]);
             var connection = GetRabbitConnection(connectionModel);
             var channel = GetRabbitChannel(connection);
+
+            var exchangeModel = jMapper.BuildExchangeModel(json["ExchangeModel"]);
+            channel = DeclareRabbitExchange(channel, exchangeModel);
+
             CloseRabbitChannel(channel);
             CloseRabbitConnection(connection);
-            Console.ReadKey();
+            Console.Read();
         }
     }
 }

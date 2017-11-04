@@ -10,8 +10,13 @@ namespace QuickRabbit.Utilities
         public ConnectionModel BuildConnectionObject(JToken JSONConnectionModel)
         {
             // Building a ConnectionModel to pass-on to GetRabbitConnection 
-            var cm = JSONConnectionModel.ToObject<ConnectionModel>();
-            return cm;
+            return JSONConnectionModel.ToObject<ConnectionModel>();
+        }
+
+        public ExchangeModel BuildExchangeModel(JToken JSONExchangeModel)
+        {
+            // Building an ExchangeModel to pass-on to BuildExchangeModel
+            return JSONExchangeModel.ToObject<ExchangeModel>();
         }
     }
 }

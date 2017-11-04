@@ -1,9 +1,16 @@
 {
     "ConnectionModel": {
-        "PORT": "5672",
-        "HOSTNAME": "localhost",
-        "USERNAME": "guest",
-        "PASSWORD": "guest",
-        "VHOST": "/" 
+        "Port": 5672,
+        "HostName": "localhost",
+        "UserName": "guest",
+        "Password": "guest",
+        "VHost": "/"
+    },
+    "ExchangeModel": {
+        "Name": "my.first.exchange",
+        "Type": "direct",
+        "Durable": true,
+        "AutoDelete": false,
+        "Arguments": null
     }
 }
