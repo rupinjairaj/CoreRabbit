@@ -1,10 +1,10 @@
-#CoreRabbit
+# CoreRabbit
 
 A .NET Core 2.0 based project with RabbitMQ samples and a quick setup app for RabbitMQ brokers.
 
 [QuickRabbit](https://github.com/rupinjairaj/CoreRabbit/tree/master/QuickRabbit "QuickRabbit") is a cross platform helper app to setup RabbitMQ brokers.
 
-##Getting Started
+## Getting Started
 
 For a quick test run, either install RabbitMQ in your development machine, use a Docker image and run the RabbitMQ Docker container or use a RabbitMQ service provider like CloudAMQP.
 
