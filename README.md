@@ -9,7 +9,7 @@ A .NET Core 2.0 based project with RabbitMQ samples and a quick setup app for Ra
 For a quick test run, do any one of the following: 
 * Install RabbitMQ in your development machine.
 * Use a Docker image and run the RabbitMQ Docker container
-* Use a RabbitMQ service provider like CloudAMQP.
+* Use a RabbitMQ service provider like [CloudAMQP](https://www.cloudamqp.com/).
 
 I recommend using a Docker container as it's much easier to setup and faster to run.
 
