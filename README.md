@@ -23,3 +23,8 @@ $ docker run -d --hostname [provide a hostname] --name [provide a container-name
 
 After that go to http://localhost:15672/#/ and if everything went well with your setup it should open up the RabbitMQ Management console login page.
 Enter the username as "guest" and password as "guest" and click login.
+
+## References
+[RabbitMQ Tutorials](http://www.rabbitmq.com/getstarted.html "RabbitMQ Tutorials")
+[Docker Documentation](https://docs.docker.com/ "Docker Documentation")
+[NET Core Guide](https://docs.microsoft.com/en-us/dotnet/core/ "NET Core Guide")
