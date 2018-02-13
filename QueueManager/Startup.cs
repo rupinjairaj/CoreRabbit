@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using QueueManager.Common;
+using QueueManager.Core;
+using QueueManager.Services;
 
 namespace QueueManager
 {
@@ -23,6 +26,10 @@ namespace QueueManager
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IApiClient, ApiClient>();
+            services.AddSingleton<IApiContainer, ApiContainer>();
+            services.AddTransient<IMgmt, Mgmt>();
+            services.AddTransient<IMgmtServiceApiClient, MgmtServiceApiClient>();
             services.AddMvc();
         }
 

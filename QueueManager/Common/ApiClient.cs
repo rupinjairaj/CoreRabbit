@@ -46,10 +46,10 @@ namespace QueueManager.Common
             _disposed = true;
         }
 
-        public TResponse GetSync<TResponse>(Uri uri) where TResponse : class
+        public HttpResponseMessage GetSync(Uri uri)
         {
             var response = _httpClient.GetAsync(uri).Result;
-            return response.Content.ReadAsStringAsync().Result.FromJson<TResponse>();
+            return response;
         }
     }
 }

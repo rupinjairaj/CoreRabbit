@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 
 namespace QueueManager.Common
 {
@@ -6,6 +7,6 @@ namespace QueueManager.Common
     {
         IApiClient Create(string userName, string password);
         void AddHeader(string key, string value);
-        TResponse GetSync<TResponse>(Uri uri) where TResponse : class;
+        HttpResponseMessage GetSync(Uri uri);
     }
 }
