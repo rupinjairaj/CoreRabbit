@@ -1,5 +1,6 @@
 using System;
 using QueueManager.AuthLib;
+using QueueManager.Common;
 using QueueManager.Services;
 
 namespace QueueManager.Core
@@ -19,7 +20,7 @@ namespace QueueManager.Core
         public string GetConsumers()
         {
             string result;
-            var uri = new Uri(Auth.BaseUrl + Auth.Consumers);
+            var uri = new Uri(QueueManagerConstants.BaseUrl + QueueManagerConstants.Consumers);
             using (var client = _mgmtServiceApiClient.Create(userName: Auth.UserName, password: Auth.Password))
             {
                 var response = client.GetSync(uri);
